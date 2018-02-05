@@ -1,0 +1,46 @@
+{
+  "author": {
+    "name": "Geoff Wagstaff",
+    "email": "geoff@gosquared.com"
+  },
+  "bugs": {
+    "url": "https://github.com/TheDeveloper/http-aws-es/issues"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.2.19"
+  },
+  "description": "Use the elasticsearch-js client with Amazon ES",
+  "devDependencies": {
+    "babel": "^5.8.23",
+    "babel-eslint": "^4.1.3",
+    "eslint": "^1.7.1"
+  },
+  "homepage": "https://github.com/TheDeveloper/http-aws-es#readme",
+  "keywords": [
+    "elasticsearch",
+    "elasticsearch-js",
+    "aws-es",
+    "aws",
+    "amazon",
+    "es",
+    "http",
+    "connector",
+    "extension",
+    "sign"
+  ],
+  "license": "MIT",
+  "main": "connector.js",
+  "name": "http-aws-es",
+  "optionalDependencies": {},
+  "readme": "Connection handler for Amazon ES\n---\n\nMakes elasticsearch-js compatible with Amazon ES. It uses the aws-sdk to make signed requests to an Amazon ES endpoint.\nDefine the Amazon ES config and the connection handler\nin the client configuration:\n\n```javascript\nvar es = require('elasticsearch').Client({\n  hosts: 'https://amazon-es-host.us-east-1.es.amazonaws.com',\n  connectionClass: require('http-aws-es'),\n  amazonES: {\n    region: 'us-east-1',\n    accessKey: 'AKID',\n    secretKey: 'secret'\n  }\n});\n```\n\n\nPre-configured credentials can be fetched automatically (through AWS's `getCredentials` function) by specifying `getCredentials: true` in the `amazonES` object in place of `accessKey` and `secretKey`.\n\nAlternatively you can pass in your own [AWS Credentials object](http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Credentials.html).\nThis is particularly useful if running on AWS Lambda, since the appropriate credentials are already in the environment.\n\n```javascript\nvar myCredentials = new AWS.EnvironmentCredentials('AWS'); // Lambda provided credentials\nvar es = require('elasticsearch').Client({\n  hosts: 'https://amazon-es-host.us-east-1.es.amazonaws.com',\n  connectionClass: require('http-aws-es'),\n  amazonES: {\n    region: \"us-east-1\",\n    credentials: myCredentials\n  }\n});\n```\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheDeveloper/http-aws-es.git"
+  },
+  "scripts": {
+    "prepublish": "babel ./connector-es6.js > ./connector.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.1.3"
+}
